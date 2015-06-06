@@ -1,0 +1,71 @@
+#include "laba8_10_header.h"
+
+void copy_val(val* v1, val* v2)
+{
+	//check if v1->name was init		
+	v1->name = (char*)malloc(sizeof(char)*strlen(v2->name)+1);
+	strcpy(v1->name, v2->name);
+	v1->lvl = v2->lvl;
+	v1->type = v2->type;
+}
+
+//marker-end of array: '\0' in the name
+void add_val(val** arr_val, val* value)
+{
+	val* temp;
+	int i, amount;
+	for(i = 0, amount = 0;;)
+	{
+		if((*arr_val)[i].name[0] == '\0')
+			break;
+		++amount;
+		++i;
+	}
+	temp = (val*)malloc(sizeof(val)*amount);
+
+	for(i = 0;i<amount;++i)
+	{
+		copy_val(&(temp[i]),&((*arr_val)[i]));
+	}
+
+	for(i = 0;i<amount;++i)
+	{
+		free((*arr_val)[i].name);
+	}
+	//amount = (*arr_val)[i].name[0];
+	free((*arr_val)[i].name);//clean'\0'
+
+	free(*arr_val);
+	*arr_val = (val*)malloc(sizeof(val)*amount + 2); //+2 - new val and '\0'
+
+	for(i = 0;i<amount;++i)
+	{
+		copy_val(&((*arr_val)[i]), &(temp[i]));
+	}
+	copy_val(&((*arr_val)[i]), value);
+	++i;
+	(*arr_val)[i].name = (char*)malloc(sizeof(char));
+	(*arr_val)[i].name[0] = '\0';
+
+	//clean temp
+	for(i = 0;i<amount;++i)
+	{
+		free(temp[i].name);
+	}
+	free(temp);
+}
+
+void fwrite_arr_val(FILE* f, val* vals)
+{
+	int i, j;
+	for(i = 0;;)
+	{
+		if(vals[i].name[i] == '\0')
+			break;
+		for(j = 0;j<strlen(vals[i].name) + 1;++j)
+		{
+			fputc(vals[i].name[j],f);
+		}
+		fprintf(f,"%d%c%d%c", vals[i].lvl,IN_BLOCK_DEVIDE,vals[i].type, BLOCK_DEVIDE);
+	}
+}
