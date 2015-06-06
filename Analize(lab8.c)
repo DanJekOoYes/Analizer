@@ -1,0 +1,61 @@
+#include "laba8_10_header.h"
+extern char token_names[10][10];
+
+int main(void)
+{
+	/*Firstly make info file*/
+	FILE* f;
+	char *token;
+	val* tmp_val;
+	int tmp_lvl;
+	val* arr_val;
+	val* vals;
+	other* others;
+	cond* conds;
+	loop* loops;
+
+	f = fopen("input.txt","rb");
+	if(!f)
+	{
+		printf("File hasn't opened\n\n");
+		return 2;
+	}
+
+	//token = get_token_name(f);
+	/*printf("%s\n\n", get_token_name(f,0));
+	printf("%s\n\n", get_token_name(f,0));
+	printf("%s\n\n", get_token_name(f,0));
+	printf("%s\n\n", get_token_name(f,0));
+	printf("%s\n\n", get_token_name(f,0));
+	printf("%s\n\n", get_token_name(f,0));
+	printf("%c<-\n\n", take_char_f(f));*/
+
+	/*printf("Now next part\n\n");
+	rewind(f);
+	tmp_lvl = 0;
+	get_token_name(f,&tmp_lvl);
+	token = get_token_name(f, &tmp_lvl);
+	tmp_val = make_val(f, INT, tmp_lvl);
+	printf("%s%d%s%d\n\n", token, tmp_val->type, tmp_val->name, tmp_val->lvl);
+
+	arr_val = (val*)malloc(sizeof(val));
+	arr_val[0].name = (char*)malloc(sizeof(char));
+	arr_val[0].name[0] = '\0';
+	add_val(&arr_val,tmp_val);
+
+	printf("%d%s%d\n\n", arr_val[0].type,arr_val[0].name,arr_val[0].lvl);*/
+
+	vals = (val*)malloc(sizeof(vals));
+	vals[0].name = (char*)malloc(sizeof(char));
+	vals[0].name[0] = '\0';
+
+	others = (other*)malloc(sizeof(other));
+	conds = (cond*)malloc(sizeof(cond));
+	loops = (loop*)malloc(sizeof(loop));
+
+	make_token_arrays(f,vals,others,conds,loops);
+
+
+	return 0;
+
+}
